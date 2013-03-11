@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="9776d07f3391415fbc2663ef990514a0" Name="Diagram1" >
+        <EntityTypeShape EntityType="Model1.Bill" Width="1.5" PointX="9.94257110634007" PointY="1.2428999250954482" />
+        <EntityTypeShape EntityType="Model1.Biller" Width="1.5" PointX="4.7181078180289395" PointY="31.59382043759982" />
+        <EntityTypeShape EntityType="Model1.BillInstance" Width="1.5" PointX="6.36643626278566" PointY="29.028063862131937" />
+        <EntityTypeShape EntityType="Model1.Schedule" Width="1.5" PointX="9.4772409729087919" PointY="13.061360380175225" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
