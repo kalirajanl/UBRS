@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using UBRS.Forms.Common;
 
 namespace UBRS
 {
@@ -16,7 +17,8 @@ namespace UBRS
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new AppMDI());
+            //Application.Run(new AppMDI());
+            Application.Run(new frmRecur());
         }
     }
 }

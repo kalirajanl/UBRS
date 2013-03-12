@@ -13,7 +13,7 @@ namespace UBRS.Models
         public decimal Amount { get; set; }
         public string Notes { get; set; }
         public DateTime StartDate { get; set; }
-        public DateTime FinishDate { get; set; }
+        public DateTime EndDate { get; set; }
 
         public ISchedule BillSchedule { get; set; }
     }
