@@ -12,7 +12,7 @@ namespace UBRS.DAL
     public class DALBillInstance
     {
 
-        public static List<BillInstanceItem> GetBillInstances(long billID)
+        public static List<BillInstanceItem> GetBillInstancesByID(long billID)
         {
             List<BillInstanceItem> instances = new List<BillInstanceItem>();
             DataTable dt = SQLWrapper.GetDataTable(new SelectQueryData { TableName = "BillInstance", FilterCondition = "BillID = " + billID.ToString(), OrderBy = "InstanceDate" });
@@ -27,36 +27,20 @@ namespace UBRS.DAL
             return instances;
         }
 
-        public static bool UpsertBillInstances(long billID, List<BillInstanceItem> itms)
+        public static IBaseQueryData GetDeleteBillInstancesByIDQuery(long billID)
         {
-            bool returnValue = false;
-            long billInstanceID = getNextBillInstanceID();
-            List<BillInstanceItem> oldInstances = GetBillInstances(billID);
-            List<IBaseQueryData> queryData = new List<IBaseQueryData>();
-
             IBaseQueryData query = new DeleteQueryData();
             query.TableName = "BillInstance";
             query.KeyFields.Add(new FieldData { FieldName = "BillID", FieldValue = billID.ToString(), FieldType = SqlDbType.BigInt });
+            return query;
+        }
 
-            queryData.Add(query);
-
-            for (int i = 0; i <= itms.Count - 1; i++)
-            {
-                query = new InsertQueryData();
-                query.TableName = "BillInstance";
-                query.Fields.Add(new FieldData { FieldName = "BillInstanceID", FieldValue = billInstanceID.ToString(), FieldType = SqlDbType.BigInt });
-                query.Fields.Add(new FieldData { FieldName = "BillID", FieldValue = billID.ToString(), FieldType = SqlDbType.BigInt });
-                query.Fields.Add(new FieldData { FieldName = "InstanceDate", FieldValue = itms[i].InstanceDate.ToString(Constants.DATE_FORMAT_SQL), FieldType = SqlDbType.Date });
-                bool isCompleted = itms[i].IsCompleted;
-                BillInstanceItem tmpItem = oldInstances.FindAll(x => x.BillID == billID && x.InstanceDate == itms[i].InstanceDate).FirstOrDefault();
-                if (tmpItem != null)
-                {
-                    isCompleted = tmpItem.IsCompleted;
-                }
-                query.Fields.Add(new FieldData { FieldName = "InstanceCompleted", FieldValue = isCompleted.ToString(), FieldType = SqlDbType.Bit });
-                queryData.Add(query);
-                billInstanceID++;
-            }
+        public static bool UpsertBillInstances(long billID)
+        {
+            bool returnValue = false;
+            List<BillInstanceItem> itms = GetBillInstancesByID(billID);
+            List<IBaseQueryData> queryData = GetUpsertBillInstanceQueryData(billID, itms);
+            returnValue = SQLWrapper.ExecuteQuery(queryData);
             return returnValue;
         }
 
@@ -94,6 +78,45 @@ namespace UBRS.DAL
                 }
             }
             return billInstanceID;
+        }
+
+        public static List<IBaseQueryData> GetUpsertBillInstanceQueryData(long billID, List<BillInstanceItem> itms)
+        {
+            long billInstanceID = getNextBillInstanceID();
+            List<BillInstanceItem> oldInstances = GetBillInstancesByID(billID);
+            List<IBaseQueryData> queryData = new List<IBaseQueryData>();
+
+            IBaseQueryData query = new DeleteQueryData();
+            query.TableName = "BillInstance";
+            query.KeyFields.Add(new FieldData { FieldName = "BillID", FieldValue = billID.ToString(), FieldType = SqlDbType.BigInt });
+
+            queryData.Add(query);
+
+            for (int i = 0; i <= itms.Count - 1; i++)
+            {
+                query = new InsertQueryData();
+                query.TableName = "BillInstance";
+                query.Fields.Add(new FieldData { FieldName = "BillInstanceID", FieldValue = billInstanceID.ToString(), FieldType = SqlDbType.BigInt });
+                query.Fields.Add(new FieldData { FieldName = "BillID", FieldValue = billID.ToString(), FieldType = SqlDbType.BigInt });
+                query.Fields.Add(new FieldData { FieldName = "InstanceDate", FieldValue = itms[i].InstanceDate.ToString(Constants.DATE_FORMAT_SQL), FieldType = SqlDbType.Date });
+                bool isCompleted = false;
+                if (itms != null)
+                {
+                    if (itms[i] != null)
+                    {
+                        isCompleted = itms[i].IsCompleted;
+                    }
+                }
+                BillInstanceItem tmpItem = oldInstances.FindAll(x => x.BillID == billID && x.InstanceDate == itms[i].InstanceDate).FirstOrDefault();
+                if (tmpItem != null)
+                {
+                    isCompleted = tmpItem.IsCompleted;
+                }
+                query.Fields.Add(new FieldData { FieldName = "InstanceCompleted", FieldValue = isCompleted.ToString(), FieldType = SqlDbType.Bit });
+                queryData.Add(query);
+                billInstanceID++;
+            }
+            return queryData;
         }
 
         #endregion

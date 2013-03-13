@@ -137,6 +137,14 @@ namespace UBRS.DAL
             return SQLWrapper.ExecuteQuery(query);
         }
 
+        public static IBaseQueryData GetDeleteScheduleByIDQuery(long scheduleID)
+        {
+            IBaseQueryData query = new DeleteQueryData();
+            query.TableName = "Schedules";
+            query.KeyFields.Add(new FieldData { FieldName = "ScheduleID", FieldValue = scheduleID.ToString(), FieldType = SqlDbType.BigInt });
+            return query;
+        }
+
         #region Private Methods
 
         private static ISchedule loadSchedule(DataTable dt, int rowNo)

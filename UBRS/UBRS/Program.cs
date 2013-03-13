@@ -17,8 +17,8 @@ namespace UBRS
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            //Application.Run(new AppMDI());
-            Application.Run(new frmRecur());
+            Application.Run(new AppMDI());
+            //Application.Run(new frmRecur());
         }
     }
 }

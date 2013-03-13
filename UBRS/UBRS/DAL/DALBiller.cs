@@ -24,7 +24,6 @@ namespace UBRS.DAL
                 }
             }
             return billers;
-
         }
 
         public static BillerItem GetBillerByID(int billerID)

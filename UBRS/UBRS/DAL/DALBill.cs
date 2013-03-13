@@ -58,7 +58,10 @@ namespace UBRS.DAL
                 query.Fields.Add(new FieldData { FieldName = "Notes", FieldValue = itm.Notes, FieldType = SqlDbType.VarChar });
                 query.Fields.Add(new FieldData { FieldName = "ScheduleID", FieldValue = scheduleID.ToString(), FieldType = SqlDbType.BigInt });
 
-                returnValue = SQLWrapper.ExecuteQuery(query);
+                List<IBaseQueryData> queryData = DALBillInstance.GetUpsertBillInstanceQueryData(billID, DALBillInstance.GetBillInstancesByID(billID));
+                queryData.Insert(0, query);
+
+                returnValue = SQLWrapper.ExecuteQuery(queryData);
 
             }
             if (returnValue)
@@ -124,7 +127,10 @@ namespace UBRS.DAL
                 query.Fields.Add(new FieldData { FieldName = "Notes", FieldValue = itm.Notes, FieldType = SqlDbType.VarChar });
                 query.Fields.Add(new FieldData { FieldName = "ScheduleID", FieldValue = scheduleID.ToString(), FieldType = SqlDbType.BigInt });
 
-                returnValue = SQLWrapper.ExecuteQuery(query);
+                List<IBaseQueryData> queryData = DALBillInstance.GetUpsertBillInstanceQueryData(itm.ID, DALBillInstance.GetBillInstancesByID(itm.ID));
+                queryData.Insert(0, query);
+
+                returnValue = SQLWrapper.ExecuteQuery(queryData);
 
             }
             return returnValue;
@@ -133,21 +139,21 @@ namespace UBRS.DAL
         private static bool DeleteBill(long billID)
         {
             bool returnValue = true;
+            List<IBaseQueryData> queryData = new List<IBaseQueryData>();
             BillItem olditm = GetBillByID(billID);
             if (olditm != null)
             {
                 if (olditm.BillSchedule != null)
                 {
-                    returnValue = DALSchedule.DeleteScheduleByID(olditm.BillSchedule.ScheduleID);
+                    queryData.Add(DALSchedule.GetDeleteScheduleByIDQuery(olditm.BillSchedule.ScheduleID));
                 }
             }
-            if (returnValue)
-            {
-                IBaseQueryData query = new DeleteQueryData();
-                query.TableName = "Bill";
-                query.KeyFields.Add(new FieldData { FieldName = "BillID", FieldValue = billID.ToString(), FieldType = SqlDbType.BigInt });
-                returnValue = SQLWrapper.ExecuteQuery(query);
-            }
+            queryData.Add(DALSchedule.GetDeleteScheduleByIDQuery(billID));
+            IBaseQueryData query = new DeleteQueryData();
+            query.TableName = "Bill";
+            query.KeyFields.Add(new FieldData { FieldName = "BillID", FieldValue = billID.ToString(), FieldType = SqlDbType.BigInt });
+            queryData.Add(query);
+            returnValue = SQLWrapper.ExecuteQuery(queryData);
             return returnValue;
         }
 
