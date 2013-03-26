@@ -14,7 +14,7 @@ namespace UBRS.DAL
         public static List<BillerItem> GetBillers()
         {
             List<BillerItem> billers = new List<BillerItem>();
-            DataTable dt = SQLWrapper.GetDataTable(new SelectQueryData { TableName = "Bill" }, 0);
+            DataTable dt = SQLWrapper.GetDataTable(new SelectQueryData { TableName = "Biller" }, 0);
             for (int i = 0; i <= dt.Rows.Count - 1; i++)
             {
                 BillerItem biller = loadBiller(dt, i);
@@ -49,9 +49,9 @@ namespace UBRS.DAL
                 query.Fields.Add(new FieldData { FieldName = "Zip", FieldValue = itm.Zip, FieldType = SqlDbType.VarChar });
                 query.Fields.Add(new FieldData { FieldName = "State", FieldValue = itm.State, FieldType = SqlDbType.VarChar });
                 query.Fields.Add(new FieldData { FieldName = "Country", FieldValue = itm.Country, FieldType = SqlDbType.VarChar });
+                query.Fields.Add(new FieldData { FieldName = "Notes", FieldValue = itm.Notes, FieldType = SqlDbType.VarChar });
 
                 returnValue = SQLWrapper.ExecuteQuery(query);
-
             }
             if (returnValue)
             {
@@ -78,6 +78,7 @@ namespace UBRS.DAL
                 query.Fields.Add(new FieldData { FieldName = "Zip", FieldValue = itm.Zip, FieldType = SqlDbType.VarChar });
                 query.Fields.Add(new FieldData { FieldName = "State", FieldValue = itm.State, FieldType = SqlDbType.VarChar });
                 query.Fields.Add(new FieldData { FieldName = "Country", FieldValue = itm.Country, FieldType = SqlDbType.VarChar });
+                query.Fields.Add(new FieldData { FieldName = "Notes", FieldValue = itm.Notes, FieldType = SqlDbType.VarChar });
 
                 returnValue = SQLWrapper.ExecuteQuery(query);
 
@@ -85,7 +86,7 @@ namespace UBRS.DAL
             return returnValue;
         }
 
-        private static bool DeleteBiller(long billerID)
+        public static bool DeleteBiller(long billerID)
         {
             bool returnValue = true;
 
@@ -116,6 +117,7 @@ namespace UBRS.DAL
                     biller.Zip = dt.Rows[rowNo]["Zip"].ToString();
                     biller.State = dt.Rows[rowNo]["State"].ToString();
                     biller.Country = dt.Rows[rowNo]["Country"].ToString();
+                    biller.Notes = dt.Rows[rowNo]["Notes"].ToString();
                 }
             }
             return biller;
@@ -125,7 +127,7 @@ namespace UBRS.DAL
         {
             int billerID = 1;
             DataTable dt = SQLWrapper.GetDataTable(new SelectQueryData { TableName = "Biller", FieldNames = "Max(BillerID)" });
-            if (dt == null)
+            if (dt != null)
             {
                 if (dt.Rows.Count == 1)
                 {

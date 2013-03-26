@@ -53,7 +53,7 @@ namespace UBRS.DAL
                     query.Fields.Add(new FieldData { FieldName = "BillerID", FieldValue = itm.Biller.ID.ToString(), FieldType = SqlDbType.Int });
                 }
                 query.Fields.Add(new FieldData { FieldName = "StartDate", FieldValue = itm.StartDate.ToString(Constants.DATE_FORMAT_SQL), FieldType = SqlDbType.DateTime });
-                query.Fields.Add(new FieldData { FieldName = "EndDate", FieldValue = itm.EndDate.ToString(Constants.DATE_FORMAT_SQL), FieldType = SqlDbType.DateTime });
+                query.Fields.Add(new FieldData { FieldName = "FinishDate", FieldValue = itm.EndDate.ToString(Constants.DATE_FORMAT_SQL), FieldType = SqlDbType.DateTime });
                 query.Fields.Add(new FieldData { FieldName = "BillAmount", FieldValue = itm.Amount.ToString(Constants.CURRENCY_FORMAT_SQL), FieldType = SqlDbType.Money });
                 query.Fields.Add(new FieldData { FieldName = "Notes", FieldValue = itm.Notes, FieldType = SqlDbType.VarChar });
                 query.Fields.Add(new FieldData { FieldName = "ScheduleID", FieldValue = scheduleID.ToString(), FieldType = SqlDbType.BigInt });
@@ -122,7 +122,7 @@ namespace UBRS.DAL
                     query.KeyFields.Add(new FieldData { FieldName = "BillerID", FieldValue = itm.Biller.ID.ToString(), FieldType = SqlDbType.Int });
                 }
                 query.Fields.Add(new FieldData { FieldName = "StartDate", FieldValue = itm.StartDate.ToString(Constants.DATE_FORMAT_SQL), FieldType = SqlDbType.DateTime });
-                query.Fields.Add(new FieldData { FieldName = "EndDate", FieldValue = itm.EndDate.ToString(Constants.DATE_FORMAT_SQL), FieldType = SqlDbType.DateTime });
+                query.Fields.Add(new FieldData { FieldName = "FinishDate", FieldValue = itm.EndDate.ToString(Constants.DATE_FORMAT_SQL), FieldType = SqlDbType.DateTime });
                 query.Fields.Add(new FieldData { FieldName = "BillAmount", FieldValue = itm.Amount.ToString(Constants.CURRENCY_FORMAT_SQL), FieldType = SqlDbType.Money });
                 query.Fields.Add(new FieldData { FieldName = "Notes", FieldValue = itm.Notes, FieldType = SqlDbType.VarChar });
                 query.Fields.Add(new FieldData { FieldName = "ScheduleID", FieldValue = scheduleID.ToString(), FieldType = SqlDbType.BigInt });
@@ -136,7 +136,7 @@ namespace UBRS.DAL
             return returnValue;
         }
 
-        private static bool DeleteBill(long billID)
+        public static bool DeleteBill(long billID)
         {
             bool returnValue = true;
             List<IBaseQueryData> queryData = new List<IBaseQueryData>();
@@ -172,6 +172,7 @@ namespace UBRS.DAL
                     bill.EndDate = Convert.ToDateTime(dt.Rows[rowNo]["FinishDate"]);
                     bill.Amount = Convert.ToDecimal(dt.Rows[rowNo]["BillAmount"]);
                     bill.Notes = dt.Rows[rowNo]["Notes"].ToString();
+                    bill.Biller = DALBiller.GetBillerByID(Convert.ToInt32(dt.Rows[rowNo]["BillerID"]));
                     if (dt.Rows[rowNo]["ScheduleID"] != DBNull.Value)
                     {
                         bill.BillSchedule = DALSchedule.GetScheduleByID(Convert.ToInt64(dt.Rows[rowNo]["ScheduleID"]));
@@ -185,7 +186,7 @@ namespace UBRS.DAL
         {
             long billID = 1;
             DataTable dt = SQLWrapper.GetDataTable(new SelectQueryData { TableName = "Bill", FieldNames = "Max(BillID)" });
-            if (dt == null)
+            if (dt!= null)
             {
                 if (dt.Rows.Count == 1)
                 {

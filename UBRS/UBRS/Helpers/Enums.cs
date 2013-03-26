@@ -7,6 +7,16 @@ using System.Collections.Generic;
 namespace UBRS.Common
 {
 
+    #region UI Related Enums
+
+    public enum PageMode
+    {
+        Add,
+        Edit,
+        View
+    };
+
+    #endregion
     
     #region Scheduler Related Enums
 

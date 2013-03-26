@@ -6,6 +6,8 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using UBRS.Forms.Masters;
+
 
 namespace UBRS
 {
@@ -63,10 +65,7 @@ namespace UBRS
             wndAbout.Show();
         }
 
-        private void AppMDI_Load(object sender, EventArgs e)
-        {
-//            showDailyView();
-        }
+       
 
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -82,6 +81,28 @@ namespace UBRS
         private void monthlyToolStripMenuItem_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void billersToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            frmBillerList frm = new frmBillerList();
+            frm.MdiParent = this;
+            frm.BringToFront();
+            frm.Show();
+        }
+
+
+        private void billsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            frmBillList frm = new frmBillList();
+            frm.MdiParent = this;
+            frm.BringToFront();
+            frm.Show();
+        }
+
+        private void AppMDI_Load(object sender, EventArgs e)
+        {
+            billsToolStripMenuItem_Click(null, null);
         }
     }
 }

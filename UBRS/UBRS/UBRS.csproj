@@ -101,7 +101,28 @@
     <Compile Include="Forms\Masters\frmBillerList.Designer.cs">
       <DependentUpon>frmBillerList.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\Masters\frmBillList.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Masters\frmBillList.Designer.cs">
+      <DependentUpon>frmBillList.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Masters\frmEditBill.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Masters\frmEditBill.designer.cs">
+      <DependentUpon>frmEditBill.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Masters\frmEditBiller.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Masters\frmEditBiller.designer.cs">
+      <DependentUpon>frmEditBiller.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\UIHelpers\BaseForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\UIHelpers\PopupForm.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Helpers\ConfigReader.cs" />
@@ -141,6 +162,21 @@
     <EmbeddedResource Include="Forms\Common\frmRecur.resx">
       <DependentUpon>frmRecur.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Masters\frmBillerList.resx">
+      <DependentUpon>frmBillerList.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Masters\frmBillList.resx">
+      <DependentUpon>frmBillList.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Masters\frmEditBill.resx">
+      <DependentUpon>frmEditBill.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Masters\frmEditBiller.resx">
+      <DependentUpon>frmEditBiller.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\UIHelpers\PopupForm.resx">
+      <DependentUpon>PopupForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -149,6 +185,7 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
     <EntityDeploy Include="UBRSModel.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
@@ -198,6 +235,25 @@
     <Content Include="External\Microsoft.Practices.Unity.Interception.dll" />
     <Content Include="External\Microsoft.Practices.Unity.Interception.pdb" />
     <Content Include="External\Microsoft.Practices.Unity.pdb" />
+    <Content Include="Images\close_16X16.jpg" />
+    <Content Include="Images\close_32X32.jpg" />
+    <Content Include="Images\daily_16X16.jpg" />
+    <Content Include="Images\exit_16X16.jpg" />
+    <Content Include="Images\gray_arrow_long.png" />
+    <Content Include="Images\gray_arrow_small.png" />
+    <Content Include="Images\green_arrow_long.png" />
+    <Content Include="Images\green_arrow_small.png" />
+    <Content Include="Images\month_16X16.jpg" />
+    <Content Include="Images\orange_arrow_long.png" />
+    <Content Include="Images\orange_arrow_small.png" />
+    <Content Include="Images\planner_16X16.ico" />
+    <Content Include="Images\planner_16X16.jpg" />
+    <Content Include="Images\plan_16X16.jpg" />
+    <Content Include="Images\save_16X16.jpg" />
+    <Content Include="Images\save_32X32.jpg" />
+    <Content Include="Images\tick_16X16.jpg" />
+    <Content Include="Images\week_16X16.jpg" />
+    <Content Include="Images\workweek_16X16.jpg" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.5">
