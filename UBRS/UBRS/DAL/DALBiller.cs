@@ -86,14 +86,18 @@ namespace UBRS.DAL
             return returnValue;
         }
 
-        public static bool DeleteBiller(long billerID)
+        public static bool DeleteBiller(int billerID)
         {
             bool returnValue = true;
+
+            List<IBaseQueryData> queryData = DALBill.GetDeleteBillQuerysByBiller(billerID);
 
             IBaseQueryData query = new DeleteQueryData();
             query.TableName = "Biller";
             query.KeyFields.Add(new FieldData { FieldName = "BillerID", FieldValue = billerID.ToString(), FieldType = SqlDbType.BigInt });
-            returnValue = SQLWrapper.ExecuteQuery(query);
+            queryData.Add(query);
+            
+            returnValue = SQLWrapper.ExecuteQuery(queryData);
 
             return returnValue;
         }

@@ -24,6 +24,7 @@ namespace UBRS.Forms.Masters
         private void frmEditBill_Load(object sender, EventArgs e)
         {
             initPage();
+            this.cboBillers.Focus();
         }
 
         private void initPage()
@@ -38,6 +39,7 @@ namespace UBRS.Forms.Masters
                         this.lblItemID.Text = "0";
                         loadBillers(null);
                         enableNonDateFields(true);
+                        CurrentSchedule = null;
                         break;
                     }
                 case PageMode.Edit:
@@ -74,7 +76,8 @@ namespace UBRS.Forms.Masters
         private void enableNonDateFields(bool enabled)
         {
             this.dtpStartDate.Enabled = enabled;
-            this.mtxtAmount.ReadOnly = !enabled;
+            this.txtBillTitle.ReadOnly = !enabled;
+            this.txtBillAmount.ReadOnly = !enabled;
             this.txtBillNotes.ReadOnly = !enabled;
             this.cboBillers.Enabled = enabled;
             this.txtBillNotes.ReadOnly = !enabled;
@@ -98,8 +101,11 @@ namespace UBRS.Forms.Masters
             if (bill != null)
             {
                 this.txtBillNotes.Text = bill.Notes;
-                this.mtxtAmount.Text = bill.Amount.ToString("#0.00");
+                this.txtBillAmount.Text = bill.Amount.ToString(Constants.CURRENCY_FORMAT_SQL);
+                this.txtBillTitle.Text = bill.BillTitle;
                 this.dtpStartDate.Value = bill.StartDate;
+                this.dtpEndDate.Value = bill.EndDate;
+                CurrentSchedule = bill.BillSchedule;
                 loadBillers(bill.Biller);
             }
         }
@@ -137,13 +143,14 @@ namespace UBRS.Forms.Masters
                                 break;
                             }
                     }
-                    bill.Amount = Convert.ToDecimal(this.mtxtAmount.Text);
+                    bill.BillTitle = this.txtBillTitle.Text;
+                    bill.Amount = Convert.ToDecimal(this.txtBillAmount.Text);
                     bill.Biller = (BillerItem)this.cboBillers.SelectedItem;
                     bill.StartDate = this.dtpStartDate.Value;
+                    bill.EndDate = this.dtpEndDate.Value;
                     bill.Notes = this.txtBillNotes.Text;
 
-                    bill.BillSchedule = null;
-                    bill.EndDate = this.dtpStartDate.Value;
+                    bill.BillSchedule = CurrentSchedule;
 
                     try
                     {
@@ -178,14 +185,17 @@ namespace UBRS.Forms.Masters
         private bool isValidData(bool showMessage)
         {
             bool returnValue = true;
-            MaskFormat oldFormat = this.mtxtAmount.TextMaskFormat;
-            this.mtxtAmount.TextMaskFormat = MaskFormat.ExcludePromptAndLiterals;
-            if (this.mtxtAmount.Text.Length == 0)
+            if (this.txtBillTitle.Text.Trim().Equals(""))
             {
                 ShowError("Please enter the amount.", Form_Title);
                 returnValue = false;
-                this.mtxtAmount.TextMaskFormat = oldFormat;
-                this.mtxtAmount.Focus();
+                this.txtBillTitle.Focus();
+            }
+            else if (Convert.ToDecimal(this.txtBillAmount.Text) <= 0)
+            {
+                ShowError("Please enter the amount.", Form_Title);
+                returnValue = false;
+                this.txtBillAmount.Focus();
             }
             return returnValue;
         }
@@ -205,7 +215,68 @@ namespace UBRS.Forms.Masters
             IsPageDirty = true;
         }
 
-        private void mtxtAmount_TextChanged(object sender, EventArgs e)
+        private void txtBillAmount_TextChanged(object sender, EventArgs e)
+        {
+            IsPageDirty = true;
+        }
+
+        private ISchedule currentSchedule;
+        
+        private ISchedule CurrentSchedule
+        {
+            get
+            {
+                return currentSchedule;
+            }
+            set
+            {
+                currentSchedule = value;
+                this.dtpEndDate.Enabled = false;
+                if (currentSchedule == null)
+                {
+                    this.lblFromCaption.Text = "  On :";
+                    this.lblToCaption.Visible = false;
+                    this.dtpEndDate.Visible = false;
+                    this.dtpEndDate.Value = this.dtpStartDate.Value;
+                }
+                else
+                {
+                    this.lblFromCaption.Text = "From :";
+                    this.lblToCaption.Visible = true;
+                    this.dtpEndDate.Visible = true;
+                    this.dtpStartDate.Value = currentSchedule.StartDate;
+                    this.dtpEndDate.Value = currentSchedule.EndDate;
+                }
+            }
+        }
+
+        private void btnRecur_Click(object sender, EventArgs e)
+        {
+            UBRS.Forms.Common.frmRecur recur = new Common.frmRecur();
+            if (CurrentSchedule != null)
+            {
+                recur.LoadSchedule(CurrentSchedule);
+            }
+            else
+            {
+                recur.StartDate = this.dtpStartDate.Value;
+            }
+            recur.ShowDialog();
+            if (recur.Tag.ToString() == "OK")
+            {
+                CurrentSchedule = recur.GetSchedule();
+                IsPageDirty = true;
+            }
+            else if (recur.Tag.ToString() == "Remove")
+            {
+                CurrentSchedule = null;
+                IsPageDirty = true;
+            }            
+            recur.Close();
+            this.txtBillTitle.Focus();
+        }
+
+        private void dtpEndDate_ValueChanged(object sender, EventArgs e)
         {
             IsPageDirty = true;
         }

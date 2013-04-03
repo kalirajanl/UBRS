@@ -77,6 +77,42 @@
   <ItemGroup>
     <Compile Include="DAL\DALBillInstance.cs" />
     <Compile Include="DAL\DALSchedule.cs" />
+    <Compile Include="Forms\Bills\ctrlBillList.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Forms\Bills\ctrlBillList.Designer.cs">
+      <DependentUpon>ctrlBillList.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Bills\CtrlMonthlyView.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Forms\Bills\CtrlMonthlyView.designer.cs">
+      <DependentUpon>CtrlMonthlyView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Bills\CtrlWeeklyView.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Forms\Bills\CtrlWeeklyView.designer.cs">
+      <DependentUpon>CtrlWeeklyView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Bills\frmbillinstancelist.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Bills\frmbillinstancelist.Designer.cs">
+      <DependentUpon>frmbillinstancelist.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Bills\frmDailyView.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Bills\frmDailyView.designer.cs">
+      <DependentUpon>frmDailyView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Bills\frmWeeklyView.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Bills\frmWeeklyView.designer.cs">
+      <DependentUpon>frmWeeklyView.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\Common\About.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -122,9 +158,13 @@
     <Compile Include="Forms\UIHelpers\BaseForm.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="Forms\UIHelpers\BaseUserControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Include="Forms\UIHelpers\PopupForm.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="Forms\UIHelpers\Validators.cs" />
     <Compile Include="Helpers\ConfigReader.cs" />
     <Compile Include="Helpers\Constants.cs" />
     <Compile Include="Model1.Context.cs">
@@ -153,6 +193,18 @@
     <Compile Include="Models\Schedule.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="Forms\Bills\ctrlBillList.resx">
+      <DependentUpon>ctrlBillList.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Bills\frmbillinstancelist.resx">
+      <DependentUpon>frmbillinstancelist.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Bills\frmDailyView.resx">
+      <DependentUpon>frmDailyView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Bills\frmWeeklyView.resx">
+      <DependentUpon>frmWeeklyView.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\Common\About.resx">
       <DependentUpon>About.cs</DependentUpon>
     </EmbeddedResource>
@@ -235,6 +287,7 @@
     <Content Include="External\Microsoft.Practices.Unity.Interception.dll" />
     <Content Include="External\Microsoft.Practices.Unity.Interception.pdb" />
     <Content Include="External\Microsoft.Practices.Unity.pdb" />
+    <None Include="Images\clock.jpg" />
     <Content Include="Images\close_16X16.jpg" />
     <Content Include="Images\close_32X32.jpg" />
     <Content Include="Images\daily_16X16.jpg" />
@@ -277,6 +330,7 @@
       <Install>true</Install>
     </BootstrapperPackage>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

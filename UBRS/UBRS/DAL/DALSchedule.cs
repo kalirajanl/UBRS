@@ -226,7 +226,7 @@ namespace UBRS.DAL
         {
             long scheduleID = 1;
             DataTable dt = SQLWrapper.GetDataTable(new SelectQueryData { TableName = "Schedules", FieldNames = "Max(ScheduleID)" });
-            if (dt == null)
+            if (dt != null)
             {
                 if (dt.Rows.Count == 1)
                 {

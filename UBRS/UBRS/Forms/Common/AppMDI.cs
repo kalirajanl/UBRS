@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using UBRS.Forms.Masters;
-
+using UBRS.Forms.Bills;
 
 namespace UBRS
 {
@@ -73,11 +73,6 @@ namespace UBRS
             Application.Exit();
         }
 
-        private void billsOverDueToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-
-        }
-
         private void monthlyToolStripMenuItem_Click(object sender, EventArgs e)
         {
 
@@ -100,9 +95,59 @@ namespace UBRS
             frm.Show();
         }
 
+
+        private void billsDueToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            frmbillinstancelist frm = new frmbillinstancelist( BillInstancePageMode.DueBills );
+            frm.MdiParent = this;
+            frm.BringToFront();
+            frm.Show();
+        }
+
+        private void upcomingBillsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            frmbillinstancelist frm = new frmbillinstancelist(BillInstancePageMode.UpcomingBills);
+            frm.MdiParent = this;
+            frm.BringToFront();
+            frm.Show();
+
+        }
+
+        private void billsOverDueToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            frmbillinstancelist frm = new frmbillinstancelist(BillInstancePageMode.OverdueBills);
+            frm.MdiParent = this;
+            frm.BringToFront();
+            frm.Show();
+        }
+
+        private void dailyToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            frmDailyView frm = new frmDailyView();
+            frm.MdiParent = this;
+            frm.BringToFront();
+            frm.Show();
+        }
+
+        private void weeklyToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            frmWeeklyView wndWeekView  = new frmWeeklyView();
+            wndWeekView.ShowInTaskbar = false;
+            wndWeekView.MdiParent = this;
+            wndWeekView.CurrentDate = DateTime.Today;
+            wndWeekView.BringToFront();
+            wndWeekView.Show();
+        }
+
+        private void yearlyToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
+
         private void AppMDI_Load(object sender, EventArgs e)
         {
-            billsToolStripMenuItem_Click(null, null);
+            weeklyToolStripMenuItem_Click(null, null);
         }
+
     }
 }

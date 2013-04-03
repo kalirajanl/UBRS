@@ -37,6 +37,7 @@
             this.btnClose = new System.Windows.Forms.Button();
             this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Biller = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.BillTitle = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.StartDate = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.FinishDate = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.BillAmount = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -55,11 +56,13 @@
             this.dgBills.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.Column1,
             this.Biller,
+            this.BillTitle,
             this.StartDate,
             this.FinishDate,
             this.BillAmount});
             this.dgBills.ContextMenuStrip = this.contextMenuStrip1;
-            this.dgBills.Location = new System.Drawing.Point(13, 13);
+            this.dgBills.EditMode = System.Windows.Forms.DataGridViewEditMode.EditProgrammatically;
+            this.dgBills.Location = new System.Drawing.Point(22, 12);
             this.dgBills.Name = "dgBills";
             this.dgBills.RowHeadersWidth = 20;
             this.dgBills.Size = new System.Drawing.Size(765, 447);
@@ -115,27 +118,41 @@
             // 
             // Biller
             // 
-            this.Biller.DataPropertyName = "Biller.Name";
+            this.Biller.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
+            this.Biller.DataPropertyName = "BillerName";
             this.Biller.HeaderText = "Biller";
             this.Biller.Name = "Biller";
+            this.Biller.Width = 54;
+            // 
+            // BillTitle
+            // 
+            this.BillTitle.DataPropertyName = "BillTitle";
+            this.BillTitle.HeaderText = "Title";
+            this.BillTitle.Name = "BillTitle";
             // 
             // StartDate
             // 
+            this.StartDate.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
             this.StartDate.DataPropertyName = "StartDate";
             this.StartDate.HeaderText = "Start Date";
             this.StartDate.Name = "StartDate";
+            this.StartDate.Width = 80;
             // 
             // FinishDate
             // 
-            this.FinishDate.DataPropertyName = "FinishDate";
+            this.FinishDate.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            this.FinishDate.DataPropertyName = "EndDate";
             this.FinishDate.HeaderText = "Finish Date";
             this.FinishDate.Name = "FinishDate";
+            this.FinishDate.Width = 85;
             // 
             // BillAmount
             // 
+            this.BillAmount.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.ColumnHeader;
             this.BillAmount.DataPropertyName = "Amount";
             this.BillAmount.HeaderText = "Bill Amount";
             this.BillAmount.Name = "BillAmount";
+            this.BillAmount.Width = 84;
             // 
             // frmBillList
             // 
@@ -164,6 +181,7 @@
         private System.Windows.Forms.ToolStripMenuItem deleteBillToolStripMenuItem;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column1;
         private System.Windows.Forms.DataGridViewTextBoxColumn Biller;
+        private System.Windows.Forms.DataGridViewTextBoxColumn BillTitle;
         private System.Windows.Forms.DataGridViewTextBoxColumn StartDate;
         private System.Windows.Forms.DataGridViewTextBoxColumn FinishDate;
         private System.Windows.Forms.DataGridViewTextBoxColumn BillAmount;

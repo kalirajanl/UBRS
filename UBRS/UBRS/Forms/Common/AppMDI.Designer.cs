@@ -40,15 +40,15 @@
             this.billersToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripSeparator();
             this.billsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.billCalendarToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.dailyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.weeklyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.monthlyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.yearlyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem3 = new System.Windows.Forms.ToolStripMenuItem();
             this.billsDueToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.billsOverDueToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.upcomingBillsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripMenuItem4 = new System.Windows.Forms.ToolStripSeparator();
-            this.billCalendarToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.weeklyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.monthlyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.yearlyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.windowsMenu = new System.Windows.Forms.ToolStripMenuItem();
             this.newWindowToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.cascadeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -84,6 +84,7 @@
             this.menuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.fileMenu,
             this.toolStripMenuItem1,
+            this.billCalendarToolStripMenuItem,
             this.toolStripMenuItem3,
             this.windowsMenu,
             this.helpMenu});
@@ -130,30 +131,67 @@
             // billersToolStripMenuItem
             // 
             this.billersToolStripMenuItem.Name = "billersToolStripMenuItem";
-            this.billersToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.billersToolStripMenuItem.Size = new System.Drawing.Size(105, 22);
             this.billersToolStripMenuItem.Text = "Billers";
             this.billersToolStripMenuItem.Click += new System.EventHandler(this.billersToolStripMenuItem_Click);
             // 
             // toolStripMenuItem2
             // 
             this.toolStripMenuItem2.Name = "toolStripMenuItem2";
-            this.toolStripMenuItem2.Size = new System.Drawing.Size(149, 6);
+            this.toolStripMenuItem2.Size = new System.Drawing.Size(102, 6);
             // 
             // billsToolStripMenuItem
             // 
             this.billsToolStripMenuItem.Name = "billsToolStripMenuItem";
-            this.billsToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.billsToolStripMenuItem.Size = new System.Drawing.Size(105, 22);
             this.billsToolStripMenuItem.Text = "Bills";
             this.billsToolStripMenuItem.Click += new System.EventHandler(this.billsToolStripMenuItem_Click);
+            // 
+            // billCalendarToolStripMenuItem
+            // 
+            this.billCalendarToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.dailyToolStripMenuItem,
+            this.weeklyToolStripMenuItem,
+            this.monthlyToolStripMenuItem,
+            this.yearlyToolStripMenuItem});
+            this.billCalendarToolStripMenuItem.Name = "billCalendarToolStripMenuItem";
+            this.billCalendarToolStripMenuItem.Size = new System.Drawing.Size(85, 20);
+            this.billCalendarToolStripMenuItem.Text = "Bill &Calendar";
+            // 
+            // dailyToolStripMenuItem
+            // 
+            this.dailyToolStripMenuItem.Name = "dailyToolStripMenuItem";
+            this.dailyToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.dailyToolStripMenuItem.Text = "Daily";
+            this.dailyToolStripMenuItem.Click += new System.EventHandler(this.dailyToolStripMenuItem_Click);
+            // 
+            // weeklyToolStripMenuItem
+            // 
+            this.weeklyToolStripMenuItem.Name = "weeklyToolStripMenuItem";
+            this.weeklyToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.weeklyToolStripMenuItem.Text = "&Weekly";
+            this.weeklyToolStripMenuItem.Click += new System.EventHandler(this.weeklyToolStripMenuItem_Click);
+            // 
+            // monthlyToolStripMenuItem
+            // 
+            this.monthlyToolStripMenuItem.Name = "monthlyToolStripMenuItem";
+            this.monthlyToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.monthlyToolStripMenuItem.Text = "&Monthly";
+            this.monthlyToolStripMenuItem.Click += new System.EventHandler(this.monthlyToolStripMenuItem_Click);
+            // 
+            // yearlyToolStripMenuItem
+            // 
+            this.yearlyToolStripMenuItem.Name = "yearlyToolStripMenuItem";
+            this.yearlyToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.yearlyToolStripMenuItem.Text = "&Yearly";
+            this.yearlyToolStripMenuItem.Click += new System.EventHandler(this.yearlyToolStripMenuItem_Click);
             // 
             // toolStripMenuItem3
             // 
             this.toolStripMenuItem3.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.billsDueToolStripMenuItem,
             this.billsOverDueToolStripMenuItem,
-            this.upcomingBillsToolStripMenuItem,
-            this.toolStripMenuItem4,
-            this.billCalendarToolStripMenuItem});
+            this.upcomingBillsToolStripMenuItem});
             this.toolStripMenuItem3.Name = "toolStripMenuItem3";
             this.toolStripMenuItem3.Size = new System.Drawing.Size(59, 20);
             this.toolStripMenuItem3.Text = "&Reports";
@@ -163,6 +201,7 @@
             this.billsDueToolStripMenuItem.Name = "billsDueToolStripMenuItem";
             this.billsDueToolStripMenuItem.Size = new System.Drawing.Size(154, 22);
             this.billsDueToolStripMenuItem.Text = "Bills &Due";
+            this.billsDueToolStripMenuItem.Click += new System.EventHandler(this.billsDueToolStripMenuItem_Click);
             // 
             // billsOverDueToolStripMenuItem
             // 
@@ -176,40 +215,7 @@
             this.upcomingBillsToolStripMenuItem.Name = "upcomingBillsToolStripMenuItem";
             this.upcomingBillsToolStripMenuItem.Size = new System.Drawing.Size(154, 22);
             this.upcomingBillsToolStripMenuItem.Text = "&Upcoming Bills";
-            // 
-            // toolStripMenuItem4
-            // 
-            this.toolStripMenuItem4.Name = "toolStripMenuItem4";
-            this.toolStripMenuItem4.Size = new System.Drawing.Size(151, 6);
-            // 
-            // billCalendarToolStripMenuItem
-            // 
-            this.billCalendarToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.weeklyToolStripMenuItem,
-            this.monthlyToolStripMenuItem,
-            this.yearlyToolStripMenuItem});
-            this.billCalendarToolStripMenuItem.Name = "billCalendarToolStripMenuItem";
-            this.billCalendarToolStripMenuItem.Size = new System.Drawing.Size(154, 22);
-            this.billCalendarToolStripMenuItem.Text = "Bill &Calendar";
-            // 
-            // weeklyToolStripMenuItem
-            // 
-            this.weeklyToolStripMenuItem.Name = "weeklyToolStripMenuItem";
-            this.weeklyToolStripMenuItem.Size = new System.Drawing.Size(119, 22);
-            this.weeklyToolStripMenuItem.Text = "&Weekly";
-            // 
-            // monthlyToolStripMenuItem
-            // 
-            this.monthlyToolStripMenuItem.Name = "monthlyToolStripMenuItem";
-            this.monthlyToolStripMenuItem.Size = new System.Drawing.Size(119, 22);
-            this.monthlyToolStripMenuItem.Text = "&Monthly";
-            this.monthlyToolStripMenuItem.Click += new System.EventHandler(this.monthlyToolStripMenuItem_Click);
-            // 
-            // yearlyToolStripMenuItem
-            // 
-            this.yearlyToolStripMenuItem.Name = "yearlyToolStripMenuItem";
-            this.yearlyToolStripMenuItem.Size = new System.Drawing.Size(119, 22);
-            this.yearlyToolStripMenuItem.Text = "&Yearly";
+            this.upcomingBillsToolStripMenuItem.Click += new System.EventHandler(this.upcomingBillsToolStripMenuItem_Click);
             // 
             // windowsMenu
             // 
@@ -341,11 +347,11 @@
         private System.Windows.Forms.ToolStripMenuItem billsDueToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem billsOverDueToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem upcomingBillsToolStripMenuItem;
-        private System.Windows.Forms.ToolStripSeparator toolStripMenuItem4;
         private System.Windows.Forms.ToolStripMenuItem billCalendarToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem weeklyToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem monthlyToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem yearlyToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem dailyToolStripMenuItem;
     }
 }
 

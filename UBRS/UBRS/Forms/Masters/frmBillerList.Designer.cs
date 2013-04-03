@@ -30,15 +30,15 @@
         {
             this.components = new System.ComponentModel.Container();
             this.dgBillers = new System.Windows.Forms.DataGridView();
+            this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.BillerName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.City = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Notes = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.addBillerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.editBillerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.deleteBillerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.btnClose = new System.Windows.Forms.Button();
-            this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.BillerName = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.City = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Notes = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.dgBillers)).BeginInit();
             this.contextMenuStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -57,11 +57,37 @@
             this.City,
             this.Notes});
             this.dgBillers.ContextMenuStrip = this.contextMenuStrip1;
+            this.dgBillers.EditMode = System.Windows.Forms.DataGridViewEditMode.EditProgrammatically;
             this.dgBillers.Location = new System.Drawing.Point(13, 13);
             this.dgBillers.Name = "dgBillers";
             this.dgBillers.RowHeadersWidth = 20;
             this.dgBillers.Size = new System.Drawing.Size(765, 447);
             this.dgBillers.TabIndex = 0;
+            // 
+            // Column1
+            // 
+            this.Column1.DataPropertyName = "ID";
+            this.Column1.HeaderText = "Biller ID";
+            this.Column1.Name = "Column1";
+            this.Column1.Visible = false;
+            // 
+            // BillerName
+            // 
+            this.BillerName.DataPropertyName = "Name";
+            this.BillerName.HeaderText = "Name";
+            this.BillerName.Name = "BillerName";
+            // 
+            // City
+            // 
+            this.City.DataPropertyName = "City";
+            this.City.HeaderText = "City";
+            this.City.Name = "City";
+            // 
+            // Notes
+            // 
+            this.Notes.DataPropertyName = "Notes";
+            this.Notes.HeaderText = "Notes";
+            this.Notes.Name = "Notes";
             // 
             // contextMenuStrip1
             // 
@@ -103,31 +129,6 @@
             this.btnClose.Text = "C&lose";
             this.btnClose.UseVisualStyleBackColor = true;
             this.btnClose.Click += new System.EventHandler(this.btnClose_Click);
-            // 
-            // Column1
-            // 
-            this.Column1.DataPropertyName = "ID";
-            this.Column1.HeaderText = "Biller ID";
-            this.Column1.Name = "Column1";
-            this.Column1.Visible = false;
-            // 
-            // BillerName
-            // 
-            this.BillerName.DataPropertyName = "Name";
-            this.BillerName.HeaderText = "Name";
-            this.BillerName.Name = "BillerName";
-            // 
-            // City
-            // 
-            this.City.DataPropertyName = "City";
-            this.City.HeaderText = "City";
-            this.City.Name = "City";
-            // 
-            // Notes
-            // 
-            this.Notes.DataPropertyName = "Notes";
-            this.Notes.HeaderText = "Notes";
-            this.Notes.Name = "Notes";
             // 
             // frmBillerList
             // 

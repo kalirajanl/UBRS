@@ -23,6 +23,18 @@ namespace UBRS.Forms.Common
             initFormContent();
         }
 
+        public DateTime StartDate
+        {
+            get
+            {
+                return this.dtpStartDate.Value;
+            }
+            set
+            {
+                this.dtpStartDate.Value = value;
+            }
+        }
+
         private void initFormContent()
         {
             this.gbMonthly.Top = this.gbDaily.Top;
@@ -87,22 +99,67 @@ namespace UBRS.Forms.Common
 
         private void btnOK_Click(object sender, EventArgs e)
         {
-            ISchedule sched = loadSchedule();
-            if (this.Parent != null)
-                this.Parent.Tag = "Ok";
+            this.Tag = "OK";
             this.Hide();
-            this.Close();
         }
 
         private void btnClose_Click(object sender, EventArgs e)
         {
-            if (this.Parent != null)
-            this.Parent.Tag = "Cancel";
+            this.Tag = "Cancel";
             this.Hide();
-            this.Close();
         }
 
-        private ISchedule loadSchedule()
+        public void LoadSchedule(ISchedule sched)
+        {
+            if (sched != null)
+            {
+                if (sched.GetType() == typeof(WeeklySchedule))
+                {
+                    WeeklySchedule wSched = (WeeklySchedule)sched;
+                    this.rdobtnWeekly.Checked = true;
+                    this.dtpStartDate.Value = wSched.StartDate;
+                    this.dtpEndDate.Value = wSched.EndDate;
+                    this.chkFriday.Checked = wSched.OnFridays;
+                    this.chkMonday.Checked = wSched.OnMondays;
+                    this.chkSaturday.Checked = wSched.OnSaturdays;
+                    this.chkSunday.Checked = wSched.OnSundays;
+                    this.chkThursday.Checked = wSched.OnThursdays;
+                    this.chkTuesday.Checked = wSched.OnTuesdays;
+                    this.chkWednesday.Checked = wSched.OnWednesdays;
+                    this.txtWlyUnits.Text = wSched.RecurEveryNoOfWeeks.ToString();
+                }
+                else if (sched.GetType() == typeof(MonthlySchedule))
+                {
+                    MonthlySchedule mSched = (MonthlySchedule)sched;
+                    this.rdobtnMonthly.Checked = true;
+                    this.dtpStartDate.Value = mSched.StartDate;
+                    this.dtpEndDate.Value = mSched.EndDate;
+                    this.txtMlyOnDay.Text = mSched.OnDay.ToString();
+                    this.txtMlyUnits.Text = mSched.RecurEveryNoOfMonths.ToString();
+                }
+                else if (sched.GetType() == typeof(YearlySchedule))
+                {
+                    YearlySchedule ySched = (YearlySchedule)sched;
+                    this.rdobtnYearly.Checked = true;
+                    this.dtpStartDate.Value = ySched.StartDate;
+                    this.dtpEndDate.Value = ySched.EndDate;
+                    this.txtYlyOnDay.Text = ySched.OnDay.ToString();
+                    this.cboYlyOnMonth.SelectedIndex = Convert.ToInt32(ySched.OnMonth);
+                    this.txtYlyUnits.Text = ySched.RecurEveryNoOfYears.ToString();
+                }
+                else
+                {
+                    DailySchedule dSched = (DailySchedule)sched;
+                    this.rdobtnDaily.Checked = true;
+                    this.dtpStartDate.Value = dSched.StartDate;
+                    this.dtpEndDate.Value = dSched.EndDate;
+                    this.txtDlyUnits.Text = dSched.RecurEveryNoOfDays.ToString();
+                    this.rdobtnDlyWeekdaysOnly.Checked = dSched.WeekDaysOnly;
+                }
+            }
+        }
+
+        public ISchedule GetSchedule()
         {
             ISchedule sched = null;
             if (this.rdobtnDaily.Checked)
@@ -173,10 +230,8 @@ namespace UBRS.Forms.Common
 
         private void btnRemoveRecurrance_Click(object sender, EventArgs e)
         {
-            if (this.Parent != null)
-                this.Parent.Tag = "Remove";
+            this.Tag = "Remove";
             this.Hide();
-            this.Close();
         }
     }
 }

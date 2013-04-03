@@ -192,12 +192,17 @@ namespace UBRS.DAL
     {
         public static DataTable GetDataTable(SelectQueryData queryData, int tableIndex=0)
         {
+            return GetDataTable(queryData.GetSQL());
+        }
+
+        public static DataTable GetDataTable(string queryText, int tableIndex = 0)
+        {
             DataTable dtResult = null;
             Database db = DatabaseFactory.CreateDatabase(ConfigReader.ActiveConnectionStringKey);
             using (DbConnection conn = db.CreateConnection())
             {
                 conn.Open();
-                DbCommand dbc = db.GetSqlStringCommand(queryData.GetSQL());
+                DbCommand dbc = db.GetSqlStringCommand(queryText);
                 DataSet ds = db.ExecuteDataSet(dbc);
                 conn.Close();
                 conn.Dispose();

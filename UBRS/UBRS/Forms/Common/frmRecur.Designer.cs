@@ -219,6 +219,7 @@
             // 
             // cboYlyOnMonth
             // 
+            this.cboYlyOnMonth.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboYlyOnMonth.FormattingEnabled = true;
             this.cboYlyOnMonth.Items.AddRange(new object[] {
             "Select",

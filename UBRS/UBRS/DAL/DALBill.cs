@@ -26,6 +26,21 @@ namespace UBRS.DAL
             return bills;
         }
 
+        public static List<BillItem> GetBillsByBiller(int billerID)
+        {
+            List<BillItem> bills = new List<BillItem>();
+            DataTable dt = SQLWrapper.GetDataTable(new SelectQueryData { TableName = "Bill", FilterCondition = "BillerID = " + billerID.ToString() }, 0);
+            for (int i = 0; i <= dt.Rows.Count - 1; i++)
+            {
+                BillItem bill = loadBill(dt, i);
+                if (bill != null)
+                {
+                    bills.Add(bill);
+                }
+            }
+            return bills;
+        }
+
         public static BillItem GetBillByID(long billID)
         {
             DataTable dt = SQLWrapper.GetDataTable(new SelectQueryData { TableName = "Bill", FilterCondition = "BillID = " + billID.ToString()}, 0);
@@ -40,9 +55,16 @@ namespace UBRS.DAL
             {
                 billID = getNextBillID();
                 long scheduleID = 0;
+                List<DateTime> schedules = null;
                 if (itm.BillSchedule != null)
                 {
                     scheduleID = DALSchedule.AddSchedule(itm.BillSchedule);
+                    schedules = ScheduleHelper.GetInstanceDates(itm.BillSchedule, itm.StartDate, itm.EndDate);
+                }
+                else
+                {
+                    schedules = new List<DateTime>();
+                    schedules.Add(itm.StartDate);
                 }
 
                 IBaseQueryData query = new InsertQueryData();
@@ -56,9 +78,16 @@ namespace UBRS.DAL
                 query.Fields.Add(new FieldData { FieldName = "FinishDate", FieldValue = itm.EndDate.ToString(Constants.DATE_FORMAT_SQL), FieldType = SqlDbType.DateTime });
                 query.Fields.Add(new FieldData { FieldName = "BillAmount", FieldValue = itm.Amount.ToString(Constants.CURRENCY_FORMAT_SQL), FieldType = SqlDbType.Money });
                 query.Fields.Add(new FieldData { FieldName = "Notes", FieldValue = itm.Notes, FieldType = SqlDbType.VarChar });
+                query.Fields.Add(new FieldData { FieldName = "BillTitle", FieldValue = itm.BillTitle, FieldType = SqlDbType.VarChar });
                 query.Fields.Add(new FieldData { FieldName = "ScheduleID", FieldValue = scheduleID.ToString(), FieldType = SqlDbType.BigInt });
 
-                List<IBaseQueryData> queryData = DALBillInstance.GetUpsertBillInstanceQueryData(billID, DALBillInstance.GetBillInstancesByID(billID));
+                List<BillInstanceItem> itms = new List<BillInstanceItem>();
+                for (int j = 0; j <= schedules.Count - 1; j++)
+                {
+                    itms.Add(new BillInstanceItem { BillID = billID, InstanceDate = schedules[j] });
+                }
+
+                List<IBaseQueryData> queryData = DALBillInstance.GetUpsertBillInstanceQueryData(billID, itms);
                 queryData.Insert(0, query);
 
                 returnValue = SQLWrapper.ExecuteQuery(queryData);
@@ -114,20 +143,37 @@ namespace UBRS.DAL
                     }
                 }
 
+                List<DateTime> schedules = null;
+                if (itm.BillSchedule != null)
+                {
+                    schedules = ScheduleHelper.GetInstanceDates(itm.BillSchedule, itm.StartDate, itm.EndDate);
+                }
+                else
+                {
+                    schedules = new List<DateTime>();
+                    schedules.Add(itm.StartDate);
+                }
                 IBaseQueryData query = new UpdateQueryData();
                 query.TableName = "Bill";
                 query.KeyFields.Add(new FieldData { FieldName = "BillID", FieldValue = itm.ID.ToString(), FieldType = SqlDbType.BigInt });
                 if (itm.Biller != null)
                 {
-                    query.KeyFields.Add(new FieldData { FieldName = "BillerID", FieldValue = itm.Biller.ID.ToString(), FieldType = SqlDbType.Int });
+                    query.Fields.Add(new FieldData { FieldName = "BillerID", FieldValue = itm.Biller.ID.ToString(), FieldType = SqlDbType.Int });
                 }
                 query.Fields.Add(new FieldData { FieldName = "StartDate", FieldValue = itm.StartDate.ToString(Constants.DATE_FORMAT_SQL), FieldType = SqlDbType.DateTime });
                 query.Fields.Add(new FieldData { FieldName = "FinishDate", FieldValue = itm.EndDate.ToString(Constants.DATE_FORMAT_SQL), FieldType = SqlDbType.DateTime });
                 query.Fields.Add(new FieldData { FieldName = "BillAmount", FieldValue = itm.Amount.ToString(Constants.CURRENCY_FORMAT_SQL), FieldType = SqlDbType.Money });
                 query.Fields.Add(new FieldData { FieldName = "Notes", FieldValue = itm.Notes, FieldType = SqlDbType.VarChar });
+                query.Fields.Add(new FieldData { FieldName = "BillTitle", FieldValue = itm.BillTitle, FieldType = SqlDbType.VarChar });
                 query.Fields.Add(new FieldData { FieldName = "ScheduleID", FieldValue = scheduleID.ToString(), FieldType = SqlDbType.BigInt });
 
-                List<IBaseQueryData> queryData = DALBillInstance.GetUpsertBillInstanceQueryData(itm.ID, DALBillInstance.GetBillInstancesByID(itm.ID));
+                List<BillInstanceItem> itms = new List<BillInstanceItem>();
+                for (int j = 0; j <= schedules.Count - 1; j++)
+                {
+                    itms.Add(new BillInstanceItem { BillID = itm.ID , InstanceDate = schedules[j] });
+                }
+
+                List<IBaseQueryData> queryData = DALBillInstance.GetUpsertBillInstanceQueryData(itm.ID, itms);
                 queryData.Insert(0, query);
 
                 returnValue = SQLWrapper.ExecuteQuery(queryData);
@@ -139,6 +185,13 @@ namespace UBRS.DAL
         public static bool DeleteBill(long billID)
         {
             bool returnValue = true;
+            List<IBaseQueryData> queryData = GetDeleteBillQuerysByBillID(billID);
+            returnValue = SQLWrapper.ExecuteQuery(queryData);
+            return returnValue;
+        }
+
+        public static List<IBaseQueryData> GetDeleteBillQuerysByBillID(long billID)
+        {
             List<IBaseQueryData> queryData = new List<IBaseQueryData>();
             BillItem olditm = GetBillByID(billID);
             if (olditm != null)
@@ -148,13 +201,35 @@ namespace UBRS.DAL
                     queryData.Add(DALSchedule.GetDeleteScheduleByIDQuery(olditm.BillSchedule.ScheduleID));
                 }
             }
-            queryData.Add(DALSchedule.GetDeleteScheduleByIDQuery(billID));
+            queryData.Add(DALBillInstance.GetDeleteBillInstancesByIDQuery(billID));
             IBaseQueryData query = new DeleteQueryData();
             query.TableName = "Bill";
             query.KeyFields.Add(new FieldData { FieldName = "BillID", FieldValue = billID.ToString(), FieldType = SqlDbType.BigInt });
             queryData.Add(query);
+            return queryData;
+        }
+
+        public static bool DeleteBillByBiller(int billerID)
+        {
+            bool returnValue = true;
+            List<IBaseQueryData> queryData = GetDeleteBillQuerysByBiller(billerID);
             returnValue = SQLWrapper.ExecuteQuery(queryData);
             return returnValue;
+        }
+
+        public static List<IBaseQueryData> GetDeleteBillQuerysByBiller(int billerID)
+        {
+            List<IBaseQueryData> queryData = new List<IBaseQueryData>();
+            List<BillItem> oldbills = GetBillsByBiller(billerID);
+            for (int i = 0; i <= oldbills.Count - 1; i++)
+            {
+                List<IBaseQueryData> tmpquey = GetDeleteBillQuerysByBillID(oldbills[i].ID);
+                for (int k = 0; k <= tmpquey.Count - 1; k++)
+                {
+                    queryData.Add(tmpquey[k]);
+                }
+            }
+            return queryData;
         }
 
         #region Private Methods
@@ -171,6 +246,7 @@ namespace UBRS.DAL
                     bill.StartDate = Convert.ToDateTime(dt.Rows[rowNo]["StartDate"]);
                     bill.EndDate = Convert.ToDateTime(dt.Rows[rowNo]["FinishDate"]);
                     bill.Amount = Convert.ToDecimal(dt.Rows[rowNo]["BillAmount"]);
+                    bill.BillTitle = dt.Rows[rowNo]["BillTitle"].ToString().Trim();
                     bill.Notes = dt.Rows[rowNo]["Notes"].ToString();
                     bill.Biller = DALBiller.GetBillerByID(Convert.ToInt32(dt.Rows[rowNo]["BillerID"]));
                     if (dt.Rows[rowNo]["ScheduleID"] != DBNull.Value)
