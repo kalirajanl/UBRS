@@ -107,6 +107,12 @@
     <Compile Include="Forms\Bills\frmDailyView.designer.cs">
       <DependentUpon>frmDailyView.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\Bills\frmMonthlyView.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Bills\frmMonthlyView.designer.cs">
+      <DependentUpon>frmMonthlyView.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\Bills\frmWeeklyView.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -201,6 +207,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Bills\frmDailyView.resx">
       <DependentUpon>frmDailyView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Bills\frmMonthlyView.resx">
+      <DependentUpon>frmMonthlyView.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Bills\frmWeeklyView.resx">
       <DependentUpon>frmWeeklyView.cs</DependentUpon>

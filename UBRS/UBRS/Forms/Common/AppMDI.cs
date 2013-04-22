@@ -75,7 +75,12 @@ namespace UBRS
 
         private void monthlyToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
+            frmMonthlyView wndMonthView = new frmMonthlyView();
+            wndMonthView.ShowInTaskbar = false;
+            wndMonthView.MdiParent = this;
+            wndMonthView.CurrentDate = DateTime.Today;
+            wndMonthView.BringToFront();
+            wndMonthView.Show();
         }
 
         private void billersToolStripMenuItem_Click(object sender, EventArgs e)
@@ -146,7 +151,12 @@ namespace UBRS
 
         private void AppMDI_Load(object sender, EventArgs e)
         {
-            weeklyToolStripMenuItem_Click(null, null);
+            monthlyToolStripMenuItem_Click(null, null);
+        }
+
+        private void billSummaryToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
         }
 
     }

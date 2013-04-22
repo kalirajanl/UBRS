@@ -44,7 +44,6 @@
             this.dailyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.weeklyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.monthlyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.yearlyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem3 = new System.Windows.Forms.ToolStripMenuItem();
             this.billsDueToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.billsOverDueToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -59,6 +58,7 @@
             this.helpMenu = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator8 = new System.Windows.Forms.ToolStripSeparator();
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.billSummaryToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.statusStrip.SuspendLayout();
             this.menuStrip.SuspendLayout();
             this.SuspendLayout();
@@ -152,8 +152,7 @@
             this.billCalendarToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.dailyToolStripMenuItem,
             this.weeklyToolStripMenuItem,
-            this.monthlyToolStripMenuItem,
-            this.yearlyToolStripMenuItem});
+            this.monthlyToolStripMenuItem});
             this.billCalendarToolStripMenuItem.Name = "billCalendarToolStripMenuItem";
             this.billCalendarToolStripMenuItem.Size = new System.Drawing.Size(85, 20);
             this.billCalendarToolStripMenuItem.Text = "Bill &Calendar";
@@ -179,19 +178,13 @@
             this.monthlyToolStripMenuItem.Text = "&Monthly";
             this.monthlyToolStripMenuItem.Click += new System.EventHandler(this.monthlyToolStripMenuItem_Click);
             // 
-            // yearlyToolStripMenuItem
-            // 
-            this.yearlyToolStripMenuItem.Name = "yearlyToolStripMenuItem";
-            this.yearlyToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.yearlyToolStripMenuItem.Text = "&Yearly";
-            this.yearlyToolStripMenuItem.Click += new System.EventHandler(this.yearlyToolStripMenuItem_Click);
-            // 
             // toolStripMenuItem3
             // 
             this.toolStripMenuItem3.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.billsDueToolStripMenuItem,
             this.billsOverDueToolStripMenuItem,
-            this.upcomingBillsToolStripMenuItem});
+            this.upcomingBillsToolStripMenuItem,
+            this.billSummaryToolStripMenuItem});
             this.toolStripMenuItem3.Name = "toolStripMenuItem3";
             this.toolStripMenuItem3.Size = new System.Drawing.Size(59, 20);
             this.toolStripMenuItem3.Text = "&Reports";
@@ -294,6 +287,13 @@
             this.aboutToolStripMenuItem.Text = "&About ... ...";
             this.aboutToolStripMenuItem.Click += new System.EventHandler(this.aboutToolStripMenuItem_Click);
             // 
+            // billSummaryToolStripMenuItem
+            // 
+            this.billSummaryToolStripMenuItem.Name = "billSummaryToolStripMenuItem";
+            this.billSummaryToolStripMenuItem.Size = new System.Drawing.Size(154, 22);
+            this.billSummaryToolStripMenuItem.Text = "Bill &Summary";
+            this.billSummaryToolStripMenuItem.Click += new System.EventHandler(this.billSummaryToolStripMenuItem_Click);
+            // 
             // AppMDI
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -350,8 +350,8 @@
         private System.Windows.Forms.ToolStripMenuItem billCalendarToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem weeklyToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem monthlyToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem yearlyToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem dailyToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem billSummaryToolStripMenuItem;
     }
 }
 
