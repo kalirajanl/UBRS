@@ -108,7 +108,7 @@ namespace UBRS.Forms.Bills
         {
             StringBuilder sbBills = new StringBuilder();
             sbBills.AppendLine("{\\rtf1\\ansi\\deff0");
-            sbBills.AppendLine("{\\colortbl;\\red0\\green0\\blue0;\\red0\\green0\\blue255;}");
+            sbBills.AppendLine("{\\colortbl;\\red255\\green0\\blue0;\\red0\\green0\\blue255;}");
             sbBills.AppendLine("{\\qr\\tab\\tab\\tab\\cf2");
             sbBills.AppendLine(forDate.ToString("dd"));
             sbBills.AppendLine("}");
@@ -116,7 +116,24 @@ namespace UBRS.Forms.Bills
             List<BillInstanceItem> bills = DALBillInstance.GetBillsByDate(forDate);
             for (int i = 0; i <= bills.Count - 1; i++)
             {
-                sbBills.AppendLine(bills[i].BillerName.Trim().PadRight(13) + " - " + bills[i].Amount.ToString("#0.00").PadLeft(10));
+                string billerName = bills[i].BillerName.Trim().PadRight(13);
+                decimal billAmount = bills[i].Amount;
+
+                if (bills[i].IsCompleted)
+                {
+                    sbBills.AppendLine(billerName + " -  {\\strike" + billAmount.ToString("#0.00").PadLeft(10) + "}");
+                }
+                else
+                {
+                    if (bills[i].InstanceDate < DateTime.Today)
+                    {
+                        sbBills.AppendLine("{\\cf1" + billerName + " - " + billAmount.ToString("#0.00").PadLeft(10) + "}");
+                    }
+                    else
+                    {
+                        sbBills.AppendLine(billerName + " - " + billAmount.ToString("#0.00").PadLeft(10));
+                    }
+                }
                 sbBills.AppendLine("\\line");
             }
             sbBills.AppendLine("}");

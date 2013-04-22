@@ -54,8 +54,13 @@ namespace UBRS.DAL
 
         public static List<BillInstanceItem> GetBillsByDate(DateTime asofdate)
         {
+            return GetBillsInDateRange(asofdate, asofdate);
+        }
+
+        public static List<BillInstanceItem> GetBillsInDateRange(DateTime fromDate, DateTime toDate)
+        {
             List<BillInstanceItem> instances = new List<BillInstanceItem>();
-            string queryText = baseQueryText + "WHERE InstanceDate = '" + asofdate.ToString(Constants.DATE_FORMAT_SQL) + "' ";
+            string queryText = baseQueryText + "WHERE InstanceDate >= '" + fromDate.ToString(Constants.DATE_FORMAT_SQL) + "' AND InstanceDate <= '" + toDate.ToString(Constants.DATE_FORMAT_SQL) + "' ";
             queryText += "ORDER BY InstanceDate, BillTitle";
             DataTable dt = SQLWrapper.GetDataTable(queryText);
             for (int i = 0; i <= dt.Rows.Count - 1; i++)
@@ -67,6 +72,22 @@ namespace UBRS.DAL
                 }
             }
             return instances;
+        }
+
+        public static DataTable GetBillsSummaryByBiller(DateTime fromDate, DateTime toDate, int billerID)
+        {
+
+            string queryText = "SELECT a.InstanceDate, SUM(b.BillAmount) TotalAmount FROM BillInstance AS a INNER JOIN Bill AS b ON a.BillID = b.BillID WHERE (b.BillerID = " + billerID.ToString() + ") And InstanceDate >= '" + fromDate.ToString(Constants.DATE_FORMAT_SQL) + "' AND InstanceDate <= '" + toDate.ToString(Constants.DATE_FORMAT_SQL) + "' ";
+            queryText += "ORDER BY InstanceDate";
+            return SQLWrapper.GetDataTable(queryText);
+        }
+
+        public static DataTable GetBillsSummaryInDateRange(DateTime fromDate, DateTime toDate)
+        {
+
+            string queryText = "SELECT C.BillerName, SUM(b.BillAmount) AS Expr1 FROM BillInstance AS a INNER JOIN Bill AS b ON a.BillID = b.BillID INNER JOIN Biller AS C ON b.BillerID = C.BillerID WHERE InstanceDate >= '" + fromDate.ToString(Constants.DATE_FORMAT_SQL) + "' AND InstanceDate <= '" + toDate.ToString(Constants.DATE_FORMAT_SQL) + "' GROUP BY C.BillerName ";
+            queryText += "ORDER BY BillerName";
+            return SQLWrapper.GetDataTable(queryText);
         }
 
         public static List<BillInstanceItem> GetDueBills(DateTime asofdate)

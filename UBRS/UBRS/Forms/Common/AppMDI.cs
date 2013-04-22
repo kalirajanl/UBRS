@@ -65,7 +65,7 @@ namespace UBRS
             wndAbout.Show();
         }
 
-       
+
 
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -103,7 +103,7 @@ namespace UBRS
 
         private void billsDueToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            frmbillinstancelist frm = new frmbillinstancelist( BillInstancePageMode.DueBills );
+            frmbillinstancelist frm = new frmbillinstancelist(BillInstancePageMode.DueBills);
             frm.MdiParent = this;
             frm.BringToFront();
             frm.Show();
@@ -136,7 +136,7 @@ namespace UBRS
 
         private void weeklyToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            frmWeeklyView wndWeekView  = new frmWeeklyView();
+            frmWeeklyView wndWeekView = new frmWeeklyView();
             wndWeekView.ShowInTaskbar = false;
             wndWeekView.MdiParent = this;
             wndWeekView.CurrentDate = DateTime.Today;
@@ -144,19 +144,18 @@ namespace UBRS
             wndWeekView.Show();
         }
 
-        private void yearlyToolStripMenuItem_Click(object sender, EventArgs e)
+        private void billSummaryToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
+            frmBillSummary wndBillSummary = new frmBillSummary();
+            wndBillSummary.ShowInTaskbar = false;
+            wndBillSummary.MdiParent = this;
+            wndBillSummary.BringToFront();
+            wndBillSummary.Show();
         }
 
         private void AppMDI_Load(object sender, EventArgs e)
         {
-            monthlyToolStripMenuItem_Click(null, null);
-        }
-
-        private void billSummaryToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-
+            billSummaryToolStripMenuItem_Click(null, null);
         }
 
     }
