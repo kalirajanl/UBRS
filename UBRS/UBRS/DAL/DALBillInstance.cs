@@ -77,7 +77,7 @@ namespace UBRS.DAL
         public static DataTable GetBillsSummaryByBiller(DateTime fromDate, DateTime toDate, int billerID)
         {
 
-            string queryText = "SELECT a.InstanceDate, SUM(b.BillAmount) TotalAmount FROM BillInstance AS a INNER JOIN Bill AS b ON a.BillID = b.BillID WHERE (b.BillerID = " + billerID.ToString() + ") And InstanceDate >= '" + fromDate.ToString(Constants.DATE_FORMAT_SQL) + "' AND InstanceDate <= '" + toDate.ToString(Constants.DATE_FORMAT_SQL) + "' ";
+            string queryText = "SELECT a.InstanceDate, SUM(b.BillAmount) TotalAmount FROM BillInstance AS a INNER JOIN Bill AS b ON a.BillID = b.BillID WHERE (b.BillerID = " + billerID.ToString() + ") And InstanceDate >= '" + fromDate.ToString(Constants.DATE_FORMAT_SQL) + "' AND InstanceDate <= '" + toDate.ToString(Constants.DATE_FORMAT_SQL) + "' GROUP BY a.InstanceDate ";
             queryText += "ORDER BY InstanceDate";
             return SQLWrapper.GetDataTable(queryText);
         }

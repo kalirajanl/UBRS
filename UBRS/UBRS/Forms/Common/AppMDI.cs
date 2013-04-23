@@ -155,7 +155,7 @@ namespace UBRS
 
         private void AppMDI_Load(object sender, EventArgs e)
         {
-            billSummaryToolStripMenuItem_Click(null, null);
+            monthlyToolStripMenuItem_Click(null, null);
         }
 
     }

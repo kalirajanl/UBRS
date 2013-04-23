@@ -29,7 +29,6 @@
         private void InitializeComponent()
         {
             System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
             System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.panel1 = new System.Windows.Forms.Panel();
             this.btnSave = new System.Windows.Forms.Button();
@@ -129,15 +128,12 @@
             // 
             chartArea1.Name = "ChartArea1";
             this.chrtReport.ChartAreas.Add(chartArea1);
-            legend1.Name = "Legend1";
-            this.chrtReport.Legends.Add(legend1);
             this.chrtReport.Location = new System.Drawing.Point(13, 95);
             this.chrtReport.Name = "chrtReport";
             series1.ChartArea = "ChartArea1";
-            series1.Legend = "Legend1";
             series1.Name = "Series1";
             this.chrtReport.Series.Add(series1);
-            this.chrtReport.Size = new System.Drawing.Size(429, 457);
+            this.chrtReport.Size = new System.Drawing.Size(902, 457);
             this.chrtReport.TabIndex = 1;
             this.chrtReport.Text = "chart1";
             // 

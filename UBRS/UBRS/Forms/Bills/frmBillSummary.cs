@@ -34,6 +34,7 @@ namespace UBRS.Forms.Bills
             loadBillers();
             this.dtpEndDate.Value = DateTime.Today;
             this.dtpStartDate.Value = this.dtpEndDate.Value.AddDays(-30);
+            btnSave_Click(null, null);
             this.dtpStartDate.Focus();
         }
 
@@ -52,13 +53,30 @@ namespace UBRS.Forms.Bills
             if (this.cboBillers.SelectedIndex == 0)
             {
                 dt = DALBillInstance.GetBillsSummaryInDateRange(this.dtpStartDate.Value, this.dtpEndDate.Value);
+                this.chrtReport.Series.Clear();
+                this.chrtReport.Series.Add("Biller");
+                this.chrtReport.Series["Biller"].SetDefault(true);
+                this.chrtReport.Series["Biller"].Enabled = true;
+                this.chrtReport.Series["Biller"].XValueMember = dt.Columns[0].ToString();
+                this.chrtReport.Series["Biller"].YValueMembers = dt.Columns[1].ToString();
+                this.chrtReport.Series["Biller"].ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Pie;
+                this.chrtReport.Width = 400;
             }
             else
             {
                 dt = DALBillInstance.GetBillsSummaryByBiller(this.dtpStartDate.Value, this.dtpEndDate.Value, ((BillerItem)cboBillers.SelectedItem).ID);
+                this.chrtReport.Series.Clear();
+                this.chrtReport.Series.Add("Bill Date");
+                this.chrtReport.Series["Bill Date"].SetDefault(true);
+                this.chrtReport.Series["Bill Date"].Enabled = true;
+                this.chrtReport.Series["Bill Date"].XValueMember = dt.Columns[0].ToString();
+                this.chrtReport.Series["Bill Date"].YValueMembers = dt.Columns[1].ToString();
+                this.chrtReport.Width = 1200;
             }
+
             this.chrtReport.DataSource = dt;
             this.chrtReport.DataBind();
+                this.chrtReport.Visible = true;
 
         }
 
