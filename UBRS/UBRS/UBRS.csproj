@@ -22,7 +22,7 @@
     <UpdatePeriodically>false</UpdatePeriodically>
     <UpdateRequired>false</UpdateRequired>
     <MapFileExtensions>true</MapFileExtensions>
-    <ApplicationRevision>1</ApplicationRevision>
+    <ApplicationRevision>2</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>
@@ -58,6 +58,9 @@
   </PropertyGroup>
   <PropertyGroup>
     <SignManifests>true</SignManifests>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>Images\UBRS_Icon.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="EntityFramework">
@@ -340,6 +343,7 @@
     <Content Include="Images\save_32X32.jpg" />
     <Content Include="Images\tick_16X16.jpg" />
     <None Include="Images\ubrs_16X16.gif" />
+    <Content Include="Images\UBRS_Icon.ico" />
     <Content Include="Images\week_16X16.jpg" />
     <Content Include="Images\workweek_16X16.jpg" />
   </ItemGroup>
